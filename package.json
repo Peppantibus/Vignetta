@@ -1,6 +1,6 @@
 {
   "name": "vignetta",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lettore di fumetti e manga",
   "main": "./out/main/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "aggiorna": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/aggiorna-app.ps1"
   },
   "author": "Vignetta contributors",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "node-unrar-js": "^2.0.2"
   },

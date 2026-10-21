@@ -51,6 +51,11 @@ npm test           # test
 npm run installer  # crea l'installer in dist/
 ```
 
+## Licenza
+
+Vignetta è distribuito con licenza [MIT](LICENSE): puoi usarlo, modificarlo e ridistribuirlo liberamente,
+mantenendo la nota di copyright.
+
 ## Note
 
 Vignetta non contiene fumetti: legge quelli che hai già. Non è affiliato con Marvel, DC o altri editori;

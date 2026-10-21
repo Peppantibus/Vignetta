@@ -6,6 +6,10 @@ directories:
 files:
   - out/**
   - package.json
+# La licenza accanto a Vignetta.exe (quella di Electron è già LICENSE.electron.txt).
+extraFiles:
+  - from: LICENSE
+    to: LICENSE.txt
 # Doppio clic da Esplora file. Il PDF è registrato a parte (build/installer.nsh) solo in «Apri con».
 fileAssociations:
   - ext: cbz
