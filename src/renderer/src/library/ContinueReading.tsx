@@ -1,4 +1,4 @@
-import { editionName } from '../../../shared/collections'
+import { COLLECTION_LABEL } from '../../../shared/collections'
 import { displayTitleOf } from '../../../shared/series'
 import type { BookSummary } from '../../../shared/types'
 import { Play, X } from '../components/icons'
@@ -26,7 +26,7 @@ export function ContinueReading({ books, onOpen, onMenu, onHide }: ContinueReadi
   const [main, ...others] = books as [BookSummary, ...BookSummary[]]
   const title = displayTitleOf(main)
   const facts = [
-    main.collection ? editionName(main.collection.edition) : null,
+    main.collection ? COLLECTION_LABEL : null,
     progressLabel(main),
     main.lastReadAt ? `letto ${lastReadLabel(main.lastReadAt)}` : null
   ].filter(Boolean)

@@ -3,7 +3,7 @@ import type { BookSummary } from '../../../shared/types'
 import { ArrowLeft, BookOpen } from '../components/icons'
 import { BookCard, Cover, featuredIssue, seriesProgressLabel } from './BookCard'
 import { statusOf } from './books'
-import { collectionEdition } from './CollectionDialog'
+import { canCreateCollection } from './CollectionDialog'
 
 interface SeriesViewProps {
   group: SeriesGroup
@@ -50,7 +50,7 @@ export function SeriesView({ group, onBack, onOpenBook, onMenu, onCreate }: Seri
             <BookOpen size={16} />
             {action.label}
           </button>
-          {collectionEdition(group) && <button className="btn" onClick={() => onCreate(group)}>Crea {collectionEdition(group)}</button>}
+          {canCreateCollection(group) && <button className="btn" onClick={() => onCreate(group)}>Crea un volume</button>}
         </div>
       </header>
 

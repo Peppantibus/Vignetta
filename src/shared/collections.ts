@@ -1,7 +1,8 @@
 import type { BookSummary, CollectionDuplicate, CollectionSpec, PageRef } from './types'
 
 export const refKey = (ref: PageRef): string => `${ref.part}/${ref.page}`
-export const editionName = (edition: CollectionSpec['edition']): string => edition === 'must-have' ? 'Must Have' : 'DC Library'
+/** Etichetta dei volumi virtuali: un nome generico, non quelli delle collane degli editori. */
+export const COLLECTION_LABEL = 'Volume'
 
 /** Solo i margini degli albi: nessuna ricerca nelle tavole interne. */
 export function boundaryPages(count: number): number[] {

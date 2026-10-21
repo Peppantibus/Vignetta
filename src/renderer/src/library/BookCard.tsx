@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { coverUrl, imageBookId } from '../../../shared/api'
-import { editionName } from '../../../shared/collections'
+import { COLLECTION_LABEL } from '../../../shared/collections'
 import { displayTitleOf, readingDirectionOf, type SeriesGroup } from '../../../shared/series'
 import type { BookSummary } from '../../../shared/types'
 import { Check, Ellipsis, HardDrive, Layers, Play } from '../components/icons'
@@ -50,7 +50,7 @@ function CoverImage({ book, showStatus }: CoverProps): React.JSX.Element {
         />
       )}
       {showStatus && !book.collection && readingDirectionOf(book, 'ltr') === 'rtl' && <span className="cover__badge cover__badge--manga">Manga</span>}
-      {showStatus && book.collection && <span className="cover__badge">{editionName(book.collection.edition)}</span>}
+      {showStatus && book.collection && <span className="cover__badge">{COLLECTION_LABEL}</span>}
       {showStatus && status === 'finished' && (
         <span className="cover__done" title="Letto">
           <Check size={14} strokeWidth={3} />

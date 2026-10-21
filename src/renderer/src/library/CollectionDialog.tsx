@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { classifyBook } from '../../../shared/catalog/classify'
-import { editionName, refKey } from '../../../shared/collections'
+import { COLLECTION_LABEL, refKey } from '../../../shared/collections'
 import { coverUrl, pageUrl } from '../../../shared/api'
 import { displayTitleOf, type SeriesGroup } from '../../../shared/series'
 import type { BookSummary, CollectionProgress } from '../../../shared/types'
@@ -9,10 +9,10 @@ import { X } from '../components/icons'
 import { useWindowEvent } from '../hooks'
 import { RemoveBookDialog } from './RemoveDialogs'
 
-export function collectionEdition(group: SeriesGroup): string | null {
+/** Un volume si crea da almeno due albi della stessa serie Marvel o DC, senza cartelle né altri volumi. */
+export function canCreateCollection(group: SeriesGroup): boolean {
   const publisher = classifyBook(group.books[0]!).publisher
-  if (group.books.length < 2 || !['marvel', 'dc'].includes(publisher) || group.books.some((book) => book.collection || book.kind === 'folder' || classifyBook(book).publisher !== publisher)) return null
-  return publisher === 'marvel' ? 'un Must Have' : 'DC Library'
+  return group.books.length >= 2 && ['marvel', 'dc'].includes(publisher) && !group.books.some((book) => book.collection || book.kind === 'folder' || classifyBook(book).publisher !== publisher)
 }
 
 export function CollectionDialog({ group, onClose, onCreated }: { group: SeriesGroup; onClose: () => void; onCreated: (book: BookSummary) => void }): React.JSX.Element {
@@ -48,7 +48,7 @@ export function CollectionDialog({ group, onClose, onCreated }: { group: SeriesG
     }
   }
   return <div className="dialog-backdrop"><form className="dialog collection-dialog" role="dialog" aria-modal="true" aria-labelledby="collection-heading" onSubmit={(event) => { event.preventDefault(); if (!busy && title.trim() && books.length >= 2) void create() }}>
-    <header className="dialog__header"><h2 id="collection-heading">Crea {collectionEdition(group)}</h2><button type="button" className="icon-btn" onClick={close} aria-label="Chiudi"><X size={18} /></button></header>
+    <header className="dialog__header"><h2 id="collection-heading">Crea un volume</h2><button type="button" className="icon-btn" onClick={close} aria-label="Chiudi"><X size={18} /></button></header>
     <p className="dialog__hint">Un solo volume, numerazione continua. Gli albi originali restano disponibili in «Gestisci volume». Il volume usa i loro file: conservali sul disco.</p>
     <label className="rename__label" htmlFor="collection-title">Titolo del volume</label>
     <input id="collection-title" className="rename__input" value={title} onChange={(e) => setTitle(e.target.value)} autoFocus disabled={busy} />
@@ -80,7 +80,7 @@ export function ManageCollection({ book, onClose, onRead }: { book: BookSummary;
   const hidden = new Set(spec.excluded.map(refKey))
   return <><div className="dialog-backdrop"><section className="dialog collection-dialog" role="dialog" aria-modal="true" aria-labelledby="manage-heading">
     <header className="dialog__header"><h2 id="manage-heading">Gestisci volume</h2><button className="icon-btn" onClick={close} aria-label="Chiudi" disabled={busy}><X size={18} /></button></header>
-    <h3>{displayTitleOf(book)}</h3><p className="dialog__hint">{editionName(spec.edition)} · {spec.parts.length} albi · {book.pageCount} pagine · {spec.excluded.length} copie escluse</p>
+    <h3>{displayTitleOf(book)}</h3><p className="dialog__hint">{COLLECTION_LABEL} · {spec.parts.length} albi · {book.pageCount} pagine · {spec.excluded.length} copie escluse</p>
     <p className="dialog__hint">Il volume e i progressi restano salvati alla chiusura. Conserva i file originali: il volume li usa per leggere le pagine.</p>
     <h3>Albi originali</h3><ol className="collection-parts">{spec.parts.map((part, index) => <li key={index}>
       <input type="radio" name="volume-cover" aria-label={`Copertina: ${part.title}`} checked={spec.coverPart === index} disabled={busy} onChange={() => void run(() => api.updateCollection(book.id, spec.excluded, index))} />

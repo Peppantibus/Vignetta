@@ -18,7 +18,7 @@ import { HeroView, NO_HERO, PublisherView, type HeroGroup } from './HeroViews'
 import { SeriesView } from './SeriesView'
 import { RenameDialog } from './RenameDialog'
 import { RemoveBookDialog } from './RemoveDialogs'
-import { CollectionDialog, ManageCollection, collectionEdition } from './CollectionDialog'
+import { CollectionDialog, ManageCollection, canCreateCollection } from './CollectionDialog'
 import { Shelf } from './Shelf'
 import { LIBRARY_ZOOM_MAX, LIBRARY_ZOOM_MIN } from '../../../shared/settings'
 import { stepLibraryZoom } from './libraryZoom'
@@ -314,7 +314,7 @@ export function LibraryView({ library, onOpenBook }: LibraryViewProps): React.JS
       {menu && <ContextMenu x={menu.x} y={menu.y} items={menuItems(menu.book)} onClose={() => setMenu(null)} />}
       {seriesMenu && <ContextMenu x={seriesMenu.x} y={seriesMenu.y} onClose={() => setSeriesMenu(null)} items={[
         { label: 'Apri serie', onSelect: () => openSeriesView(seriesMenu.group.key) },
-        ...(collectionEdition(seriesMenu.group) ? [{ label: `Crea ${collectionEdition(seriesMenu.group)}…`, icon: <Layers size={16} />, onSelect: () => setCreating(seriesMenu.group) }] : [])
+        ...(canCreateCollection(seriesMenu.group) ? [{ label: 'Crea un volume…', icon: <Layers size={16} />, onSelect: () => setCreating(seriesMenu.group) }] : [])
       ]} />}
       {creating && <CollectionDialog group={creating} onClose={() => setCreating(null)} onCreated={(book) => { setCreating(null); goTo({ series: null }); setManaging(book) }} />}
       {managing && <ManageCollection book={library.books.find((b) => b.id === managing.id) ?? managing} onClose={() => setManaging(null)} onRead={openBook} />}

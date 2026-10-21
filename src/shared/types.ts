@@ -17,6 +17,7 @@ export interface CollectionPart {
 export interface PageRef { part: number; page: number }
 export interface CollectionDuplicate { ref: PageRef; original: PageRef }
 export interface CollectionSpec {
+  /** Editore della serie al momento della creazione; salvato ma non più mostrato (l'etichetta è sempre «Volume»). */
   edition: 'must-have' | 'dc-library'
   parts: CollectionPart[]
   duplicates: CollectionDuplicate[]
