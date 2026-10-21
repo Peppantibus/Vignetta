@@ -10,12 +10,14 @@
   Uso:  npm run aggiorna
         npm run aggiorna -- -SenzaTest     (salta typecheck e test)
         npm run aggiorna -- -Prova         (mostra cosa farebbe, senza chiudere né installare nulla)
+        npm run aggiorna -- -Versione 1.1.0  (una versione precisa invece dell'ultima cifra +1)
 
   Compatibile con Windows PowerShell 5.1.
 #>
 param(
   [switch]$SenzaTest,
-  [switch]$Prova
+  [switch]$Prova,
+  [string]$Versione
 )
 
 $ErrorActionPreference = 'Stop'
@@ -66,16 +68,21 @@ if (-not $installata) { Ferma 'Vignetta non risulta installata. La prima volta u
 if ($installata.PerTutti) { Ferma 'Vignetta è installata per tutti gli utenti: serve un aggiornamento come amministratore, non gestito da questo script.' }
 $versioneAttuale = (Get-Content package.json -Raw | ConvertFrom-Json).version
 Write-Host "Vignetta installata in: $($installata.Cartella) (versione $($installata.Versione))"
+# Controllata subito, prima dei test: deve essere x.y.z e più alta di quella attuale.
+if ($Versione) {
+  if ($Versione -notmatch '^\d+\.\d+\.\d+$') { Ferma "versione «$Versione» non valida: serve la forma 1.2.3." }
+  if ([version]$Versione -le [version]$versioneAttuale) { Ferma "la versione $Versione non è più alta di quella attuale ($versioneAttuale)." }
+}
 
 if (-not $SenzaTest) {
   Passo 'Controllo dei tipi e test'
   if ($Prova) { Write-Host '(prova) npm run typecheck, npm test' } else { Esegui-Npm 'typecheck'; Esegui-Npm 'test' }
 }
 
-# Ultima cifra +1 (0.1.0 -> 0.1.1): Impostazioni -> App mostra quale versione è installata.
+# Ultima cifra +1 (0.1.0 -> 0.1.1), oppure quella scelta con -Versione: Impostazioni -> App mostra quale è installata.
 Passo 'Nuova versione'
 $parti = $versioneAttuale.Split('.')
-$versione = "$($parti[0]).$($parti[1]).$([int]$parti[2] + 1)"
+$versione = if ($Versione) { $Versione } else { "$($parti[0]).$($parti[1]).$([int]$parti[2] + 1)" }
 if ($Prova) { Write-Host "(prova) $versioneAttuale -> $versione" } else {
   $script:versioneSalvata = @{}
   foreach ($file in 'package.json', 'package-lock.json') { $percorso = Join-Path $progetto $file; $script:versioneSalvata[$percorso] = [IO.File]::ReadAllText($percorso) }
