@@ -1,0 +1,37 @@
+{
+  "name": "vignetta",
+  "version": "0.1.20",
+  "description": "Lettore di fumetti e manga",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc -p tsconfig.node.json && tsc -p tsconfig.web.json",
+    "test": "vitest run",
+    "dist": "electron-vite build && electron-builder --win --dir",
+    "installer": "electron-vite build && electron-builder --win nsis",
+    "aggiorna": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/aggiorna-app.ps1"
+  },
+  "author": "Vignetta contributors",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "node-unrar-js": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^6.0.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  },
+  "productName": "Vignetta",
+  "private": true
+}

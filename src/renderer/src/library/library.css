@@ -1,0 +1,1561 @@
+.library {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---------- Barra del titolo ---------- */
+
+.library__titlebar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--titlebar-h);
+  padding: 0 calc(var(--window-controls-w) + 8px) 0 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.search {
+  flex: 0 1 380px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  margin: 0 auto;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-faint);
+  transition: border-color 0.15s;
+  -webkit-app-region: no-drag;
+}
+.search:focus-within {
+  border-color: rgba(255, 120, 73, 0.5);
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+}
+.search input::placeholder {
+  color: var(--text-faint);
+}
+
+.library__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zoom-control {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+.zoom-control .icon-btn {
+  width: 30px;
+  height: 30px;
+}
+.zoom-control__value {
+  min-width: 46px;
+  padding: 4px 2px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+.zoom-control__value:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+/* ---------- Contenuto ---------- */
+
+.library__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px 56px;
+}
+
+.section-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.shelf {
+  margin-bottom: 40px;
+}
+.shelf .section-title {
+  margin-bottom: 16px;
+}
+
+/* Una riga di copertine che scorre in orizzontale (Aggiunti di recente). */
+.book-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 156px;
+  gap: 22px;
+  overflow-x: auto;
+  padding: 14px 4px 12px;
+  margin: -14px -4px 0;
+}
+
+/* ---------- Fasce in cima alle pagine (Continua a leggere, personaggio) ---------- */
+
+.continue {
+  margin-bottom: 44px;
+}
+.banner + div,
+.banner + .hero-view__details {
+  margin-top: 36px;
+}
+.banner {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-height: 250px;
+  padding: 28px 32px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: radial-gradient(ellipse at top left, rgba(255, 120, 73, 0.16), transparent 60%), var(--bg-raised);
+}
+/* La copertina sfocata dietro: colori dell'albo, testo sempre leggibile grazie al velo scuro sopra. */
+.banner__backdrop {
+  position: absolute;
+  inset: -60px;
+  z-index: -2;
+  width: calc(100% + 120px);
+  height: calc(100% + 120px);
+  object-fit: cover;
+  filter: blur(48px) saturate(1.5) brightness(0.55);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(14, 14, 18, 0.55) 0%, rgba(14, 14, 18, 0.35) 45%, rgba(14, 14, 18, 0.75) 100%);
+  pointer-events: none;
+}
+.banner__cover {
+  flex: none;
+  width: 140px;
+  padding: 0;
+  border: none;
+  background: none;
+  transition: transform 0.25s var(--ease-out);
+}
+.banner__cover:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
+.banner__cover .cover {
+  box-shadow: 0 22px 44px -14px rgba(0, 0, 0, 0.9);
+}
+.banner__body {
+  flex: 1 1 320px;
+  min-width: 0;
+  max-width: 560px;
+}
+.banner__eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.banner__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.banner__meta {
+  margin: 0 0 14px;
+  color: rgba(238, 237, 243, 0.72);
+  font-size: 13.5px;
+}
+.banner__bar {
+  display: block;
+  height: 5px;
+  max-width: 380px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.banner__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+.banner__action {
+  margin-top: 20px;
+}
+.banner--large .banner__cover {
+  width: 200px;
+}
+.banner__title:is(h1) {
+  font-size: 36px;
+}
+/* Il prossimo albo del percorso, nella fascia di un personaggio. */
+.banner__next {
+  margin: 0 0 12px;
+  color: rgba(238, 237, 243, 0.85);
+  font-size: 14px;
+}
+.banner__next strong {
+  color: var(--text);
+  font-weight: 650;
+}
+.banner__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  color: rgba(238, 237, 243, 0.65);
+}
+
+/* Gli altri albi in corso, a destra della fascia. */
+.continue__others {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 48%;
+  margin-left: auto;
+}
+.continue__others-title {
+  margin: 0 0 10px;
+  color: rgba(238, 237, 243, 0.65);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.continue__row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 6px 4px 6px;
+  margin: -6px -4px 0;
+}
+.continue-thumb {
+  position: relative;
+  flex: none;
+  width: 92px;
+}
+.continue-thumb__open {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+}
+.continue-thumb .cover {
+  transition: transform 0.25s var(--ease-out);
+}
+.continue-thumb:hover .cover,
+.continue-thumb__open:focus-visible .cover {
+  transform: translateY(-3px);
+}
+.continue-thumb__open:focus-visible .cover {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.continue-thumb .banner__bar {
+  height: 3px;
+}
+.continue-thumb__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.continue-thumb__hide {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: rgba(10, 10, 14, 0.75);
+  color: var(--text);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.continue-thumb:hover .continue-thumb__hide {
+  opacity: 1;
+}
+
+/* Finestra stretta: gli altri albi vanno sotto. */
+@media (max-width: 1000px) {
+  .banner {
+    flex-wrap: wrap;
+  }
+  .continue__others {
+    flex-basis: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 550;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.chip:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+.chip[aria-selected='true'] {
+  border-color: transparent;
+  background: var(--text);
+  color: var(--bg);
+}
+.chip__count {
+  opacity: 0.55;
+  font-size: 12px;
+}
+
+/* Spazio sul disco, nella barra del titolo: separato dallo zoom da una linea sottile. */
+.disk-usage {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-right: 6px;
+  padding-right: 12px;
+  border-right: 1px solid var(--border);
+  color: var(--text-faint);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.disk-usage button {
+  padding: 3px 8px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.disk-usage button:hover {
+  background: rgba(255, 120, 73, 0.24);
+}
+@media (max-width: 1080px) {
+  .disk-usage {
+    display: none;
+  }
+}
+.sort {
+  height: 30px;
+  margin-left: auto;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 13px;
+  outline: none;
+}
+
+.no-results {
+  color: var(--text-muted);
+}
+
+/* ---------- Copertine ---------- */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 38px 22px;
+}
+
+.book-card,
+.book-card__open {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  outline: none;
+}
+.book-card {
+  position: relative;
+}
+.book-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.book-card__meta {
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.cover {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: hsl(var(--hue) 30% 18%);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+}
+.book-card:hover .cover,
+.book-card:focus-visible .cover,
+.book-card__open:focus-visible .cover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 40px -16px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+.book-card:focus-visible .cover,
+.book-card__open:focus-visible .cover {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* «Leggi» e «⋯» al passaggio del mouse: un riquadro grande quanto la copertina, che si alza con lei. */
+.book-card__actions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  aspect-ratio: 2 / 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(to top, rgba(8, 8, 12, 0.85), rgba(8, 8, 12, 0) 45%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.18s,
+    transform 0.25s var(--ease-out);
+}
+.book-card:hover .book-card__actions,
+.book-card:focus-within .book-card__actions {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+.book-card:hover .book-card__actions > *,
+.book-card:focus-within .book-card__actions > * {
+  pointer-events: auto;
+}
+/* Mentre si trascina per l'ordine personale le azioni non devono coprire il punto di rilascio. */
+.book-grid:has(.book-card--dragging) .book-card__actions {
+  display: none;
+}
+.book-card__read,
+.book-card__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border: none;
+  border-radius: 999px;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.book-card__read {
+  gap: 6px;
+  padding: 0 13px 0 11px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.book-card__read:hover {
+  background: var(--accent-hover);
+}
+.book-card__read svg {
+  fill: currentColor;
+}
+.book-card__more {
+  width: 30px;
+  margin-left: auto;
+  background: rgba(20, 20, 27, 0.8);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+}
+.book-card__more:hover {
+  background: rgba(40, 40, 52, 0.95);
+}
+.book-card--dragging {
+  opacity: 0.4;
+}
+.book-card--over .cover {
+  box-shadow: 0 0 0 3px var(--accent);
+  transform: translateY(-4px);
+}
+
+.cover__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  background: linear-gradient(160deg, hsl(var(--hue) 45% 30%), hsl(calc(var(--hue) + 40) 40% 14%));
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.cover__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    filter 0.25s;
+}
+.cover__image.is-ready {
+  opacity: 1;
+}
+
+.cover__badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: rgba(10, 10, 14, 0.62);
+  backdrop-filter: blur(6px);
+  color: rgba(238, 237, 243, 0.9);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* Nella scheda Manga l'etichetta direbbe una cosa ovvia. */
+.library__content[data-tab='manga'] .cover__badge--manga {
+  display: none;
+}
+
+/* Albo letto: copertina attenuata nelle griglie, torna piena al passaggio del mouse. */
+.book-grid .cover.is-finished:not(.is-missing) .cover__image,
+.book-row .cover.is-finished:not(.is-missing) .cover__image {
+  filter: brightness(0.62) saturate(0.7);
+}
+.book-card:hover .cover.is-finished:not(.is-missing) .cover__image,
+.book-card:focus-within .cover.is-finished:not(.is-missing) .cover__image {
+  filter: none;
+}
+
+/* Albo eliminato dal disco: resta sullo scaffale, spento, con la sua cronologia. */
+.cover.is-missing .cover__image,
+.cover.is-missing .cover__placeholder {
+  filter: grayscale(1) brightness(0.55);
+}
+.cover__missing {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(10, 10, 14, 0.75);
+  backdrop-filter: blur(6px);
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.book-card:has(.cover.is-missing) .book-card__title,
+.book-card:has(.cover.is-finished) .book-card__title {
+  color: var(--text-muted);
+}
+
+.cover__done {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  background: var(--success);
+  color: #06281b;
+}
+
+.cover__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.55);
+}
+.cover__progress div {
+  height: 100%;
+  background: var(--accent);
+}
+
+/* ---------- Libreria vuota ---------- */
+
+.empty {
+  max-width: 440px;
+  margin: 12vh auto 0;
+  text-align: center;
+}
+.empty__art {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 120, 73, 0.22), transparent 70%);
+}
+.empty h1 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+}
+.empty p {
+  margin: 0 0 24px;
+  color: var(--text-muted);
+}
+.empty__actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ---------- Menu contestuale ---------- */
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+.menu {
+  position: fixed;
+  min-width: 230px;
+  padding: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: #1e1e27;
+  box-shadow: var(--shadow-pop);
+  animation: pop-in 0.12s var(--ease-out);
+}
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 13.5px;
+  text-align: left;
+}
+.menu__item svg {
+  color: var(--text-muted);
+}
+.menu__item:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+.menu__item--danger,
+.menu__item--danger svg {
+  color: var(--danger);
+}
+.menu__separator {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--border);
+}
+
+/* ---------- Finestra delle cartelle ---------- */
+
+.folders-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.folders-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  padding: 6px 6px 6px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+}
+.folders-list li > svg {
+  flex: none;
+  color: var(--accent);
+}
+.folders-list span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.folders-empty {
+  padding: 24px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-faint);
+  text-align: center;
+}
+.is-spinning {
+  animation: spin 1s linear infinite;
+}
+.backup-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.backup-section h3 {
+  margin: 0;
+  font-size: 15px;
+}
+.backup-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+}
+.backup-row > svg {
+  flex: none;
+  color: var(--accent);
+}
+.backup-row span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.backup-status {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.backup-status--error {
+  color: var(--danger);
+}
+
+/* ---------- Serie ---------- */
+
+.chip--danger:hover {
+  border-color: color-mix(in srgb, var(--danger) 50%, transparent);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--danger);
+}
+.chip--toggle[aria-pressed='true'] {
+  border-color: rgba(255, 120, 73, 0.45);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Gli altri albi della serie, impilati dietro la copertina. */
+.series-card__stack {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  margin: 10px 10px 0 0;
+  transition: transform 0.25s var(--ease-out);
+}
+.series-card__stack::before,
+.series-card__stack::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s var(--ease-out);
+}
+.series-card__stack::before {
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #3a3a47;
+  transform: translate(5px, -5px);
+}
+.series-card__stack::after {
+  z-index: -2;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #2a2a35;
+  transform: translate(10px, -10px);
+}
+.series-card:hover .cover,
+.series-card:focus-visible .cover {
+  transform: none;
+}
+.series-card:hover .series-card__stack {
+  transform: translateY(-3px);
+}
+.series-card:hover .series-card__stack::before {
+  transform: translate(7px, -7px) rotate(1.5deg);
+}
+.series-card:hover .series-card__stack::after {
+  transform: translate(14px, -13px) rotate(3deg);
+}
+.series-card__stack > .cover__progress {
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 0 0 10px 10px;
+}
+.series-card__count {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(10, 10, 14, 0.75);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.book-card__issue {
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.book-card__issue + .book-card__title {
+  margin-top: 2px;
+}
+
+.series-view__back {
+  margin: -6px 0 16px -10px;
+}
+.series-view__hero {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  margin-bottom: 36px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: radial-gradient(ellipse at top left, rgba(255, 120, 73, 0.12), transparent 60%), var(--bg-raised);
+}
+.series-view__cover {
+  flex: none;
+  width: 150px;
+}
+.series-view__eyebrow,
+.details__eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.series-view__info h1 {
+  margin: 4px 0 6px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.series-view__meta {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+}
+
+/* ---------- Dettagli di un fumetto ---------- */
+
+.details {
+  position: relative;
+  width: min(720px, calc(100% - 32px));
+  padding: 26px;
+}
+.details__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+.details__layout {
+  display: flex;
+  gap: 24px;
+}
+.details__cover {
+  flex: none;
+  width: 170px;
+}
+.details__body {
+  flex: 1;
+  min-width: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 8px;
+  user-select: text;
+}
+.details__body h2 {
+  margin: 4px 0 2px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.details__story {
+  margin: 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.details__facts {
+  display: grid;
+  gap: 6px;
+  margin: 18px 0 0;
+}
+.details__facts div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+}
+.details__facts dt {
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+.details__facts dd {
+  margin: 0;
+}
+.details__summary {
+  margin: 18px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.details__hint {
+  margin: 18px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+/* ---------- Elimina dal disco ---------- */
+
+.free-space-dialog {
+  width: min(480px, calc(100% - 32px));
+}
+.free-space-dialog__title {
+  margin: 14px 0 6px;
+  font-weight: 650;
+}
+.free-space-dialog__title span {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.free-space-dialog__list {
+  max-height: 180px;
+  margin: 8px 0 0;
+  padding: 8px 12px 8px 28px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.free-space-dialog__text {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.free-space-dialog__ok {
+  margin-right: 6px;
+  vertical-align: -3px;
+  color: var(--success);
+}
+.relink {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.relink__label,
+.relink__hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.relink__hint {
+  margin-top: 8px;
+  color: var(--text-faint);
+  font-size: 12px;
+}
+.relink__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.relink__row span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 12.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+  text-align: left;
+}
+.free-space__error {
+  margin: 10px 0 0;
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.details__path {
+  margin: 14px 0 0;
+  color: var(--text-faint);
+  font-size: 12px;
+  word-break: break-all;
+}
+
+/* ---------- Schede delle categorie ---------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+.tab {
+  --tab-color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 38px;
+  padding: 0 16px 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 650;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+.tab::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tab-color);
+}
+.tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+}
+.tab[aria-selected='true'] {
+  border-color: color-mix(in srgb, var(--tab-color) 55%, transparent);
+  background: color-mix(in srgb, var(--tab-color) 16%, transparent);
+  color: var(--text);
+}
+.tab--marvel {
+  --tab-color: var(--marvel);
+}
+.tab--dc {
+  --tab-color: var(--dc);
+}
+.tab--manga {
+  --tab-color: var(--manga);
+}
+.tab--other {
+  --tab-color: var(--other);
+}
+.tab--archived {
+  --tab-color: var(--text-faint);
+}
+.tab__count {
+  color: var(--text-faint);
+  font-size: 12px;
+  font-weight: 600;
+}
+.section-title--spaced {
+  margin-bottom: 18px;
+}
+.section-title__count {
+  margin-left: 6px;
+  color: var(--text-faint);
+  font-size: 15px;
+  font-weight: 600;
+}
+.hero-view__archived {
+  margin-top: 40px;
+}
+.archived-view__hint {
+  max-width: 760px;
+  margin: -8px 0 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ---------- Personaggi ---------- */
+
+.hero-grid {
+  --hero-color: var(--accent);
+  display: grid;
+  /* Senza misura (o con troppi personaggi per lo schermo): riquadri compatti che vanno a capo. */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 22px;
+}
+.hero-grid--marvel {
+  --hero-color: var(--marvel);
+}
+.hero-grid--dc {
+  --hero-color: var(--dc);
+}
+
+.hero-tile {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 22px 14px 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--hero-color) 24%, transparent), transparent 70%),
+    var(--bg-raised);
+  text-align: center;
+  transition:
+    transform 0.25s var(--ease-out),
+    border-color 0.2s;
+}
+.hero-tile:hover,
+.hero-tile:focus-visible {
+  border-color: color-mix(in srgb, var(--hero-color) 55%, transparent);
+  transform: translateY(-3px);
+  outline: none;
+}
+/* La copertina in primo piano, sfocata: ogni personaggio ha i suoi colori. */
+.hero-tile__backdrop {
+  position: absolute;
+  inset: -40px;
+  z-index: -2;
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  object-fit: cover;
+  filter: blur(34px) saturate(1.5) brightness(0.5);
+  opacity: 0.85;
+  pointer-events: none;
+}
+.hero-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to bottom, transparent 35%, rgba(14, 14, 18, 0.8)),
+    linear-gradient(color-mix(in srgb, var(--hero-color) 12%, transparent), transparent 60%);
+  pointer-events: none;
+}
+.hero-tile__covers {
+  /* Le copertine crescono con il riquadro (cqw = larghezza del riquadro). */
+  --cover-w: clamp(88px, 44cqw, 170px);
+  position: relative;
+  display: block;
+  width: 100%;
+  height: calc(var(--cover-w) * 1.5 + 30px);
+}
+/* Un solo fumetto: una copertina vera, più grande del ventaglio. */
+.hero-tile__covers--single {
+  --cover-w: clamp(116px, 52cqw, 200px);
+  height: calc(var(--cover-w) * 1.5 + 6px);
+}
+/*
+ * Riquadri misurati sullo schermo (heroLayout): altezza fissa, quindi le copertine seguono sia la larghezza sia
+ * l'altezza (cqh); i px tolti all'altezza sono nome, sottotitolo e margini.
+ */
+/* Quando i riquadri non arrivano al bordo destro (larghezza massima), il blocco resta al centro. */
+.hero-grid--fitted {
+  justify-content: center;
+}
+.hero-grid--fitted .hero-tile {
+  container-type: size;
+  justify-content: center;
+}
+.hero-grid--fitted .hero-tile__covers {
+  --cover-w: min(44cqw, calc((100cqh - 115px) / 1.5), 260px);
+}
+.hero-grid--fitted .hero-tile__covers--single {
+  --cover-w: min(54cqw, calc((100cqh - 75px) / 1.5), 280px);
+}
+.hero-tile__cover {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  width: var(--cover-w);
+  transition: transform 0.3s var(--ease-out);
+}
+.hero-tile__covers--single .hero-tile__cover {
+  top: 2px;
+}
+.hero-tile__cover .cover {
+  box-shadow: 0 16px 30px -12px rgba(0, 0, 0, 0.85);
+}
+.hero-tile__cover--0 {
+  z-index: 3;
+  transform: translateX(-50%);
+}
+.hero-tile__cover--1 {
+  z-index: 2;
+  transform: translateX(-92%) rotate(-8deg);
+}
+.hero-tile__cover--2 {
+  z-index: 1;
+  transform: translateX(-8%) rotate(8deg);
+}
+.hero-tile:hover .hero-tile__cover--0 {
+  transform: translateX(-50%) translateY(-3px);
+}
+.hero-tile:hover .hero-tile__cover--1 {
+  transform: translateX(-104%) rotate(-12deg);
+}
+.hero-tile:hover .hero-tile__cover--2 {
+  transform: translateX(4%) rotate(12deg);
+}
+.hero-tile__name {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 6cqw, 26px);
+  font-weight: 650;
+  line-height: 1.2;
+}
+.hero-tile__meta {
+  margin-top: 4px;
+  color: rgba(238, 237, 243, 0.7);
+  font-size: 12.5px;
+}
+.hero-tile--none .hero-tile__name {
+  color: var(--text-muted);
+}
+/* Quanto è stato letto dei suoi fumetti. */
+.hero-tile__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.hero-tile__progress > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.hero-view__header {
+  margin-bottom: 28px;
+}
+.hero-view__header h1 {
+  margin: 4px 0 4px;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+}
+.hero-view__header .series-view__meta {
+  margin: 0;
+}
+.hero-view__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.hero-view__toolbar .btn {
+  margin-left: auto;
+}
+.hero-view__help {
+  display: inline-flex;
+  color: var(--text-faint);
+  cursor: help;
+}
+.hero-view__help:hover {
+  color: var(--text-muted);
+}
+/* Scheda di un personaggio con un solo albo: dati e trama sotto la fascia. */
+.hero-view__details {
+  max-width: 760px;
+}
+.hero-view__details .details__summary {
+  margin-top: 20px;
+}
+/* Copertine misurate sullo spazio libero (coverLayout): titolo e copertine restano al centro, allineati fra loro. */
+.hero-view__order {
+  margin: 0 auto;
+}
+.book-card--next .cover {
+  box-shadow:
+    0 0 0 2px var(--accent),
+    var(--shadow-card);
+}
+.book-card--next .book-card__issue {
+  color: var(--accent);
+}
+
+/* ---------- Classificazione manuale ---------- */
+
+.classify {
+  width: min(540px, calc(100% - 32px));
+}
+.classify__publishers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.classify__publisher[aria-checked='true'] {
+  border-color: transparent;
+  background: var(--text);
+  color: var(--bg);
+}
+.classify__search {
+  flex: none;
+  margin: 0 0 10px;
+}
+.classify__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  max-height: 290px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+.classify__list button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  text-align: left;
+}
+.classify__list button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+.classify__list button[aria-checked='true'] {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+.classify__check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 5px;
+}
+[aria-checked='true'] > .classify__check {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.classify__summary {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+.classify__reset {
+  margin-right: auto;
+}
+.classify__selected {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  margin-bottom: 10px;
+}
+.classify__selected .classify__summary {
+  margin: 0;
+}
+.classify__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px 0 12px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12.5px;
+  font-weight: 650;
+}
+.classify__tag:hover {
+  background: var(--accent-hover);
+}
+
+/* ---------- Titolo personale ---------- */
+
+.rename__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.rename__input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.rename__preview {
+  margin: 14px 0 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.rename__preview strong {
+  color: var(--accent);
+}
+.rename__automatic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.rename__automatic input {
+  accent-color: var(--accent);
+}
+.rename__file {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-faint);
+  font-size: 12px;
+}
+.rename__error {
+  color: var(--accent);
+  font-size: 13px;
+}
+.rename__restore {
+  margin-right: auto;
+}
+
+/* Creazione e gestione dei volumi virtuali. */
+.collection-dialog { width: min(900px, calc(100vw - 64px)); max-height: calc(100vh - 64px); overflow-y: auto; position: relative; }
+.collection-dialog h3 { margin: 22px 0 10px; }
+.collection-dialog progress { width: 100%; accent-color: var(--accent); }
+.collection-parts { list-style: none; padding: 0; margin: 12px 0 22px; max-height: 330px; overflow-y: auto; }
+.collection-parts li { display: flex; align-items: center; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.collection-parts li > span { flex: 1; min-width: 0; font-size: 13px; overflow-wrap: anywhere; }
+.collection-parts small { display: block; color: var(--text-muted); margin-top: 4px; font-size: 11px; }
+.collection-parts img { width: 30px; height: 44px; object-fit: cover; border-radius: 3px; }
+.collection-parts .btn { padding: 7px 9px; white-space: nowrap; font-size: 12px; }
+.collection-dialog input[type='checkbox'], .collection-dialog input[type='radio'] { accent-color: var(--accent); }
+.collection-duplicates { max-height: 250px; overflow-y: auto; margin-bottom: 14px; }
+.collection-duplicates > div { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+.collection-duplicates label { flex: 1; font-size: 13px; }
+.collection-duplicates small { color: var(--text-muted); }
+.collection-preview { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px; background: #0d0d10f5; }
+.collection-preview img { max-width: 100%; max-height: calc(100vh - 110px); object-fit: contain; }
+.series-view__info > .btn + .btn { margin-left: 12px; }
+.collection-dialog { display: flex; flex-direction: column; }
+.collection-dialog > :not(.collection-parts):not(.collection-duplicates) { flex-shrink: 0; }
+.collection-dialog .collection-parts, .collection-dialog .collection-duplicates { min-height: 100px; flex-shrink: 1; }

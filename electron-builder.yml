@@ -1,0 +1,28 @@
+appId: io.github.peppantibus.vignetta
+productName: Vignetta
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**
+  - package.json
+# Doppio clic da Esplora file. Il PDF è registrato a parte (build/installer.nsh) solo in «Apri con».
+fileAssociations:
+  - ext: cbz
+    name: Vignetta.cbz
+    description: Fumetto CBZ
+  - ext: cbr
+    name: Vignetta.cbr
+    description: Fumetto CBR
+win:
+  icon: build/icon.png
+  target: nsis
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: Vignetta
+  # Disinstallando restano libreria, progressi e copie di sicurezza in %APPDATA%\Vignetta.
+  deleteAppDataOnUninstall: false
+  artifactName: Vignetta-Setup-${version}.${ext}

@@ -1,0 +1,107 @@
+# Istruzioni interne per gli agenti: restano solo in locale.
+AGENTS.md
+
+# Dipendenze e risultati della compilazione (build/icon.png è una risorsa del progetto).
+node_modules/
+/out/
+/dist/
+/release/
+coverage/
+.nyc_output/
+.vite/
+.vitest/
+*.tsbuildinfo
+
+# Dati locali di Vignetta: libreria, progressi, copertine e cache.
+library.json
+library.json.*
+# Copie di sicurezza datate della libreria (cronologia di lettura e percorsi personali).
+library-*.json
+userdata/
+user-data/
+userData/
+portable-data/
+Vignetta-data/
+Nuvola-data/
+cache/
+covers/
+logs/
+*.log
+*.dmp
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Fumetti e archivi personali: i test generano i propri file nelle cartelle temporanee.
+*.cbz
+*.cbr
+*.cb7
+*.pdf
+*.epub
+*.zip
+*.rar
+*.7z
+*.part
+*.partial
+*.crdownload
+*.download
+/fumetti/
+/comics/
+/downloads/
+/fixtures/
+/screenshots/
+/test-results/
+/playwright-report/
+*-screenshots/
+
+# Segreti, configurazione personale e certificati di firma.
+.env
+.env.*
+!.env.example
+!.env.template
+.npmrc
+.netrc
+.git-credentials
+*.local
+*.local.*
+*.pem
+*.key
+*.pfx
+*.p12
+*.keystore
+*.jks
+credentials.json
+secrets.json
+*.secrets.json
+id_rsa*
+id_ed25519*
+
+# Profilo Electron, se per errore userData viene impostato alla radice del progetto.
+/Local Storage/
+/Session Storage/
+/IndexedDB/
+/GPUCache/
+/Code Cache/
+/Network/
+/Cookies
+/Cookies-journal
+/Local State
+/Preferences
+
+# File temporanei, backup ed editor.
+/tmp/
+/temp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.idea/
+.vs/
+.vscode/
+*.code-workspace
+.DS_Store
+Thumbs.db
+Desktop.ini
