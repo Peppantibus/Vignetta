@@ -1,6 +1,6 @@
 {
   "name": "vignetta",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Lettore di fumetti e manga",
   "main": "./out/main/index.js",
   "scripts": {

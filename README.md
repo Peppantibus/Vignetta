@@ -54,7 +54,8 @@ npm run installer  # crea l'installer in dist/
 ## Licenza
 
 Vignetta è distribuito con licenza [MIT](LICENSE): puoi usarlo, modificarlo e ridistribuirlo liberamente,
-mantenendo la nota di copyright.
+mantenendo la nota di copyright. Le licenze dei componenti di terze parti (React, node-unrar-js e UnRAR,
+icone Lucide, font) sono in [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
 
 ## Note
 
