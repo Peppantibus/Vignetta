@@ -31,7 +31,8 @@ Premi `?` nel lettore per vedere tutte le scorciatoie.
 
 ## Installazione
 
-Scarica `Vignetta-Setup-<versione>.exe` ed eseguilo. Serve Windows 10 o 11.
+Scarica `Vignetta-Setup-<versione>.exe` dall'[ultima versione](https://github.com/Peppantibus/Vignetta/releases/latest)
+ed eseguilo. Serve Windows 10 o 11.
 
 L'installer non è firmato, quindi Windows potrebbe mostrare «Windows ha protetto il PC»:
 clicca **Ulteriori informazioni** → **Esegui comunque**.
